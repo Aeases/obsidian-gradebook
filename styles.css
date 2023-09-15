@@ -6,3 +6,47 @@ available in the app when your plugin is enabled.
 If your plugin does not need CSS, delete this file.
 
 */
+
+.gradebook-tree-item-children {
+    padding-left: var(--nav-item-children-padding-left);
+    margin-left: var(--nav-item-children-margin-left);
+    margin-bottom: 1px;
+    border-left: var(--nav-indentation-guide-width) solid var(--nav-indentation-guide-color);
+}
+
+/* .gradebook-tree-item-children:hover {
+    border: 
+} */
+
+.gradebook-item-mark {
+    align-self: center;
+    margin-left: auto;
+}
+
+.gradebook-item-assessment-title {
+    width: 75%;
+}
+
+.gradebook-subject-header-title {
+    font-weight: var(--inline-title-weight);
+}
+
+.gradebook-header-create-new-subject {
+    float: right;
+}
+
+.gradebook-header-inline-title {
+    font-variant: var(--inline-title-variant);
+    font-family: var(--inline-title-font);
+    font-weight: var(--inline-title-weight);
+    color: var(--inline-title-color);
+    align-self: center;
+    align-items: center;
+    margin: 0;
+    padding: var(--size-2-2) var(--size-2-3);
+}
+
+.gradebook-no-margin {
+    margin: 0;
+    color: var(--color-accent)
+}

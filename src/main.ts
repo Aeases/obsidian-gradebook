@@ -1,4 +1,5 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { GRADE_BOOK_VIEW, GradeBookView } from 'views/grade-book-view';
 
 // Remember to rename these classes and interfaces!
 
@@ -6,21 +7,44 @@ interface MyPluginSettings {
 	mySetting: string;
 }
 
+export const baseClassName = 'obsidian-gradebook';
+
 const DEFAULT_SETTINGS: MyPluginSettings = {
 	mySetting: 'default'
 }
 
 export default class MyPlugin extends Plugin {
+
 	settings: MyPluginSettings;
+	
+	async openGradeBook() {
+		this.app.workspace.detachLeavesOfType(GRADE_BOOK_VIEW);
+	
+		await this.app.workspace.getRightLeaf(false).setViewState({
+		  type: GRADE_BOOK_VIEW,
+		  active: true,
+		});
+	
+		this.app.workspace.revealLeaf(
+		  this.app.workspace.getLeavesOfType(GRADE_BOOK_VIEW)[0]
+		);
+	  }
 
 	async onload() {
 		await this.loadSettings();
 
+		this.registerView(
+			GRADE_BOOK_VIEW,
+			(leaf) => new GradeBookView(leaf, this)
+			)
+
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
 			// Called when the user clicks the icon.
-			new Notice('This is a notice!');
+			this.openGradeBook()
 		});
+
+		
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass('my-plugin-ribbon-class');
 
@@ -77,6 +101,7 @@ export default class MyPlugin extends Plugin {
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
+
 
 	onunload() {
 
